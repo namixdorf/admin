@@ -1,0 +1,12 @@
+
+
+<%= content_tag(:li, raw(content_tag(:div, "No #{@header} Found."))) if @items.empty? %>
+
+<div class="collection">
+  <% @items.each do |i| %>
+    <%= link_to(i.name, [:edit, i], class: 'collection-item light-blue-text') %>
+  <% end %>
+</div>
+
+
+<%= paginate(@items) %>
