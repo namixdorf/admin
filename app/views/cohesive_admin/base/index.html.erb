@@ -1,6 +1,7 @@
 
 
-<%= content_tag(:li, raw(content_tag(:div, "No #{@header} Found."))) if @items.empty? %>
+<%= content_tag(:div, "No #{@header} Found.") if @items.empty? %>
+<%= link_to(raw("#{content_tag(:i, 'add', class: 'material-icons left')}New #{@header.singularize}"), [:new, @klass.model_name.param_key], class: 'waves-effect waves-light btn') %>
 
 <div class="collection">
   <% @items.each do |i| %>
