@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = CohesiveAdmin::VERSION
   s.authors     = ["cohesiveneal"]
   s.email       = ["neal@cohesive.cc"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of CohesiveAdmin."
-  s.description = "TODO: Description of CohesiveAdmin."
+  s.homepage    = "https://github.com/cohesivecc/admin"
+  s.summary     = "Rails engine for adding a simple admin interface to your website."
+  s.description = "Rails engine for adding a simple admin interface to your website."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
