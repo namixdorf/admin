@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412174224) do
+ActiveRecord::Schema.define(version: 20160602171550) do
 
   create_table "cohesive_admin_users", force: :cascade do |t|
     t.string   "name",            limit: 40
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 20160412174224) do
 
   create_table "jobs", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
