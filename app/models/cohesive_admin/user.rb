@@ -1,6 +1,6 @@
 module CohesiveAdmin
   class User < ActiveRecord::Base
-    
+
     cohesive_admin
 
     has_secure_password
@@ -8,7 +8,8 @@ module CohesiveAdmin
     validates :email,         presence: true,
                               format: { with: /(\A(\s*)\Z)|(\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z)/i, message: 'must be valid email format (joe@yahoo.com etc.)' },
                               uniqueness: { message: 'is already regisitered' }
-    validates :password,      format: { with: /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z])/, message: 'must be at least 8 characters long, and must contain at least one upper-case, one lower-case, and one number or special character' }, allow_blank: true
+    validates :password,      presence: true
+    validates :password,      format: { with: /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z])/, message: 'must be at least 8 characters long, and must contain at least one upper-case, one lower-case, and one number or special character' }, allow_blank: true, unless: Proc.new { Rails.env.development? }
 
     VALID_TYPES = ['Administrator']
 
@@ -34,7 +35,12 @@ module CohesiveAdmin
     class << self
 
       def authenticate(email, password)
-        find_by_email(email).try(:authenticate, password)
+        u = find_by_email(email)
+        if Rails.env.development?
+          u
+        else
+          u.try(:authenticate, password)
+        end
       end
 
       def random_password(length=10)
