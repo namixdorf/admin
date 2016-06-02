@@ -126,7 +126,7 @@ module CohesiveAdmin
       end
 
       def object_header
-        "#{@object.id ? 'Edit' : 'Create a New'} #{@object.class.admin_display_name.titleize}"
+        "#{@object.id ? 'Edit' : 'Create a New'} #{@object.class.admin_display_name}"
       end
       helper_method :object_header
 

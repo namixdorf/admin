@@ -80,11 +80,11 @@ module CohesiveAdmin::Concerns::Resource
         def self.display_name_method
           unless @display_name_method
             # admin_fields['display_name_method'], self.name, or first admin_fields attribute, finally ID
-            if (dn = self.admin_fields['display_name_method']) && self.respond_to?(dn)
+            if (dn = self.admin_fields['display_name_method']) && self.method_defined?(dn)
               @display_name_method = dn
-            elsif self.respond_to?('name')
+            elsif self.method_defined?(:name)
               @display_name_method = :name
-            elsif (dn = self.admin_fields.first[0]) && self.respond_to?(dn)
+            elsif (dn = self.admin_fields.first[0]) && self.method_defined?(dn)
               @display_name_method = dn
             else
               @display_name_method = :id
