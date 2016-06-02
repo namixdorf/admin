@@ -33,8 +33,8 @@
 
     <ul class="side-nav fixed white">
       <% CohesiveAdmin.config.managed_models.each do |m| %>
-        <%= content_tag(:li, class: ('active' if @klass && @klass.name == m.name)) do %>
-          <%= link_to(m.name.pluralize, [m], class: "collection-item") %>
+        <%= content_tag(:li, class: ('active' if @klass && @klass.admin_display_name == m.admin_display_name)) do %>
+          <%= link_to(m.admin_display_name.pluralize, [m], class: "collection-item") %>
         <% end %>
       <% end %>
     </ul>

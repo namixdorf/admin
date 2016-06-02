@@ -20,14 +20,14 @@ module CohesiveAdmin::Concerns::Resource
     def cohesive_admin(args={})
 
 
-      @blacklisted_columns = ['id', 'created_at', 'updated_at']
-      @admin_config = nil
-      @admin_strong_params = nil
+      @blacklisted_columns  = ['id', 'created_at', 'updated_at']
+      @admin_config         = nil
+      @admin_strong_params  = nil
+      @display_name_method  = nil
 
       CohesiveAdmin.manage(self)
 
       class_eval do
-
 
         def self.admin_resource?
           true
@@ -77,6 +77,27 @@ module CohesiveAdmin::Concerns::Resource
           self.admin_config['fields']
         end
 
+        def self.display_name_method
+          unless @display_name_method
+            # admin_fields['display_name_method'], self.name, or first admin_fields attribute, finally ID
+            if (dn = self.admin_fields['display_name_method']) && self.respond_to?(dn)
+              @display_name_method = dn
+            elsif self.respond_to?('name')
+              @display_name_method = :name
+            elsif (dn = self.admin_fields.first[0]) && self.respond_to?(dn)
+              @display_name_method = dn
+            else
+              @display_name_method = :id
+            end
+          end
+          @display_name_method
+        end
+
+        # Class display name
+        def self.admin_display_name
+          self.admin_config['name'] || self.name
+        end
+
         def self.admin_strong_params
           unless @admin_strong_params
             # setup strong parameters from managed fields
@@ -98,6 +119,10 @@ module CohesiveAdmin::Concerns::Resource
           @admin_strong_params
         end
 
+        # Instance display name
+        def admin_display_name
+          self.send(self.class.display_name_method)
+        end
 
       end
 

@@ -4,7 +4,7 @@
 
 <div class="collection">
   <% @items.each do |i| %>
-    <%= link_to(i.name, [:edit, i], class: 'collection-item light-blue-text') %>
+    <%= link_to(i.admin_display_name, [:edit, i], class: 'collection-item light-blue-text') %>
   <% end %>
 </div>
 
