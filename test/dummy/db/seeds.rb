@@ -29,9 +29,11 @@ Job.create([
 Location.create([
   {
       slug: 'cohesive',
-      address: '100 Eddystone Drive',
-      city: 'Hudson',
-      state: 'IA',
-      zip: '50613'
+      address_attributes: {
+        street: '100 Eddystone Drive',
+        city: 'Hudson',
+        state: 'IA',
+        zip: '50613'
+      }
   }
 ])
