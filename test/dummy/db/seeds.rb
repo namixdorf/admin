@@ -16,6 +16,22 @@ end
 Person.create(@people.uniq)
 
 
-["Plumber", "Welder", "Programmer", "Designer", "Executive"].each do |j|
-  Job.create({ name: j })
-end
+Job.create([
+  { name: 'Plumber' },
+  { name: 'Welder' },
+  { name: 'Programmer' },
+  { name: 'Designer' },
+  { name: 'Executive' },
+])
+
+
+
+Location.create([
+  {
+      slug: 'cohesive',
+      address: '100 Eddystone Drive',
+      city: 'Hudson',
+      state: 'IA',
+      zip: '50613'
+  }
+])

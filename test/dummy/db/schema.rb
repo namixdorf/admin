@@ -31,13 +31,16 @@ ActiveRecord::Schema.define(version: 20160602171550) do
   end
 
   create_table "locations", force: :cascade do |t|
+    t.string   "slug",       limit: 20
     t.string   "address"
     t.string   "city"
     t.string   "state"
     t.string   "zip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
+
+  add_index "locations", ["slug"], name: "index_locations_on_slug"
 
   create_table "people", force: :cascade do |t|
     t.string   "name"

@@ -69,18 +69,18 @@ module CohesiveAdmin
       end
     end
 
-    def sort
-      @items = @klass.sorted.all
-      render file: 'cohesive_admin/base/sort'
-    end
-
-    def apply_sort
-      params["item"].each_with_index { |x, i|
-        m = @klass.find(x)
-        m.update_attribute(:position, i)
-      }
-      render text: ''
-    end
+    # def sort
+    #   @items = @klass.sorted.all
+    #   render file: 'cohesive_admin/base/sort'
+    # end
+    #
+    # def apply_sort
+    #   params["item"].each_with_index { |x, i|
+    #     m = @klass.admin_find(x)
+    #     m.update_attribute(:position, i)
+    #   }
+    #   render text: ''
+    # end
 
     def destroy
       # if it's not a 'permanent' object, destroy it
@@ -121,7 +121,7 @@ module CohesiveAdmin
       def load_object
         # default lookup by ID
         # optionally overwrite in your controllers
-        @object = @klass.find(params[:id]) rescue nil
+        @object = @klass.admin_find(params[:id]) rescue nil
         render_404 unless @object
       end
 
