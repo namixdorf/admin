@@ -68,15 +68,17 @@ module CohesiveAdmin::Concerns::Resource
               else
                 # construct default config
 
-                # reflections
+                # reflections - ie. belongs_to, has_many
                 reflection_columns = []
                 self.reflections.each do |k, r|
-                  @admin_config[:fields][k.to_sym] = {
-                    type:           'association',
-                    macro:          r.macro,
-                    foreign_key:    r.foreign_key
-                  }
-                  reflection_columns << r.foreign_key.to_sym
+                  unless r.macro.to_sym == :has_one # omit has_one relationships
+                    @admin_config[:fields][k.to_sym] = {
+                      type:           'association',
+                      macro:          r.macro,
+                      foreign_key:    r.foreign_key
+                    }
+                    reflection_columns << r.foreign_key.to_sym
+                  end
                 end
 
                 blacklisted = @blacklisted_columns + reflection_columns
