@@ -76,7 +76,7 @@ module CohesiveAdmin::Concerns::Resource
                     macro:          r.macro,
                     foreign_key:    r.foreign_key
                   }
-                  reflection_columns << r.foreign_key
+                  reflection_columns << r.foreign_key.to_sym
                 end
 
                 blacklisted = @blacklisted_columns + reflection_columns

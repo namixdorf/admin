@@ -3,7 +3,7 @@
 	<%= simple_form_for(@object, include_id: true, html: { multipart: true, id: 'object-form' }) do |f| %>
 
 		<% @klass.admin_fields.each do |k,v| %>
-			<% if v['type'] == 'association' %>
+			<% if v[:type] == 'association' %>
 				<%= f.association(k) %>
 			<% else %>
 				<%= f.input(k) %>
