@@ -28,12 +28,20 @@ module CohesiveAdmin::Concerns::Resource
 
       CohesiveAdmin.manage(self)
 
+
       class_eval do
 
         # Instance display name
         def admin_display_name
           self.send(self.class.display_name_method)
         end
+
+        # # define a name method for SimpleForm
+        # unless self.attribute_method?(:name) || self.method_defined?(:name)
+        #   def name
+        #     admin_display_name
+        #   end
+        # end
 
 
 
@@ -71,15 +79,21 @@ module CohesiveAdmin::Concerns::Resource
                 # reflections - ie. belongs_to, has_many
                 reflection_columns = []
                 self.reflections.each do |k, r|
-                  unless r.macro.to_sym == :has_one # omit has_one relationships
-                    @admin_config[:fields][k.to_sym] = {
-                      type:           'association',
-                      macro:          r.macro,
-                      foreign_key:    r.foreign_key
-                    }
-                    reflection_columns << r.foreign_key.to_sym
-                  end
+                  reflection = {
+                    type:           'association',
+                    macro:          r.macro,
+                    foreign_key:    r.foreign_key,
+                    class:          r.klass,
+                    nested:         self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym)
+                  }
+
+                  # omit has_one relationships by default, unless they are accepts_nested_attributes_for AND flagged as an admin_resource
+                  next if reflection[:macro] == :has_one && (!reflection[:nested] || !reflection[:class].admin_resource?)
+
+                  @admin_config[:fields][k.to_sym] = reflection
+                  reflection_columns << r.foreign_key.to_sym
                 end
+
 
                 blacklisted = @blacklisted_columns + reflection_columns
 
@@ -101,15 +115,18 @@ module CohesiveAdmin::Concerns::Resource
           def display_name_method
             unless @display_name_method
               # admin_fields['display_name_method'], self.name, or first admin_fields attribute, finally ID
-              if (dn = self.admin_fields['display_name_method']) && self.method_defined?(dn)
+              if (dn = self.admin_fields['display_name_method']) && (self.attribute_method?(dn) || self.method_defined?(dn))
                 @display_name_method = dn
-              elsif self.method_defined?(:name)
+              elsif self.attribute_method?(:name) || self.method_defined?(:name)
                 @display_name_method = :name
-              elsif (dn = self.admin_fields.first[0]) && self.method_defined?(dn)
-                @display_name_method = dn
               else
-                @display_name_method = :id
+                # iterate admin_fields until we find the first suitable attribute - NOT IDEAL!!
+                self.admin_fields.each do |k,f|
+                  next if f[:type] == 'association'
+                  break if (self.attribute_method?(k) || self.method_defined?(k)) && @display_name_method = k
+                end
               end
+              @display_name_method = :id if @display_name_method.blank?
             end
             @display_name_method
           end
@@ -123,19 +140,28 @@ module CohesiveAdmin::Concerns::Resource
             unless @admin_strong_params
               # setup strong parameters from managed fields
               @admin_strong_params = []
+              a = {}
+
               self.admin_fields.each do |k, f|
 
                 if f[:type] == 'association'
-                  m = f[:macro].to_s
-                  if m == 'belongs_to'
+
+                  if f[:nested]
+                    a["#{k}_attributes".to_sym] = [:id] + f[:class].admin_strong_params
+
+                  elsif f[:macro] == :belongs_to
                     @admin_strong_params << f[:foreign_key]
-                  elsif m == 'has_many'
+
+                  elsif f[:macro] == :has_many
                     @admin_strong_params << { f[:foreign_key].pluralize => [] }
                   end
+
                 else
                   @admin_strong_params << k
                 end
               end
+
+              @admin_strong_params << a
             end
             @admin_strong_params
           end

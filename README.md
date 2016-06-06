@@ -9,6 +9,11 @@ This is the basic user model used for logging in to the CMS.
 ## UI
 CohesiveAdmin uses the [Materialize](http://materializecss.com/) CSS framework.
 
+
+## Best Practices
+  * Make use of the :inverse_of option in your ActiveRecord relationships. This prevents nested fields on an object from displaying in the form. http://guides.rubyonrails.org/association_basics.html#bi-directional-associations
+  * For nested attributes functionality, be sure that both the parent model and the nested attributes model are managed resources (`cohesive_admin`)
+
 ## Installation
 Add it to your Gemfile:
 

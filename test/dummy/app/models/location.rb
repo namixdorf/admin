@@ -2,7 +2,7 @@ class Location < ActiveRecord::Base
 
   cohesive_admin({ finder: :find_by_slug })
 
-  has_one :address
+  has_one :address, inverse_of: :location
 
   accepts_nested_attributes_for :address
 

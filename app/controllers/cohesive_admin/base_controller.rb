@@ -137,7 +137,7 @@ module CohesiveAdmin
 
       def klass_params
         # overwrite in your controller
-        params.require(@klass.model_name.param_key).permit(@klass.admin_strong_params)
+        params.require(@klass.model_name.param_key).permit(*@klass.admin_strong_params)
       end
 
   end

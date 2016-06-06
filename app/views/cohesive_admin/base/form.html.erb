@@ -2,13 +2,7 @@
 <div class="container">
 	<%= simple_form_for(@object, include_id: true, html: { multipart: true, id: 'object-form' }) do |f| %>
 
-		<% @klass.admin_fields.each do |k,v| %>
-			<% if v[:type] == 'association' %>
-				<%= f.association(k) %>
-			<% else %>
-				<%= f.input(k) %>
-			<% end %>
-		<% end %>
+		<%= render(partial: 'fields', locals: { klass: @klass, f: f }) %>
 
 		<button type="submit" class="waves-effect waves-light btn">Save</button>
 		<%= link_to('Delete', @object, method: 'delete', class: "waves-effect waves-light btn red", data: { confirm: "Are you sure you want to delete this #{klass_header.downcase}?"}) %>

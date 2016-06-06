@@ -1,0 +1,30 @@
+<%
+klass ||= nil
+f ||= nil
+parent_klass ||= nil
+%>
+<% if klass && f %>
+
+  <% klass.admin_fields.each do |k,v| %>
+    <% if v[:type] == 'association' %>
+
+      <% if v[:nested] %>
+
+        <%= f.simple_fields_for k do |f2| %>
+          <%= render(partial: 'fields', locals: { klass: v[:class], f: f2, parent_klass: klass  }) %>
+        <% end %>
+
+      <% elsif !inverse_relationship_exists?(klass, k, parent_klass) %>
+
+        <%= f.association(k) %>
+
+      <% end %>
+
+    <% else %>
+
+      <%= f.input(k) %>
+
+    <% end %>
+  <% end %>
+
+<% end %>
