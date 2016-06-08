@@ -73,6 +73,7 @@ module CohesiveAdmin::Concerns::Resource
                 # reflections - ie. belongs_to, has_many
                 reflection_columns = []
                 self.reflections.each do |k, r|
+                  next if r.polymorphic? # have to skip polymorphic associations
                   reflection = {
                     type:           'association',
                     macro:          r.macro,
