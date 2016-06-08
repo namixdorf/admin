@@ -35,13 +35,7 @@ module CohesiveAdmin::Concerns::Resource
         def admin_display_name
           self.send(self.class.display_name_method)
         end
-
-        # # define a name method for SimpleForm
-        # unless self.attribute_method?(:name) || self.method_defined?(:name)
-        #   def name
-        #     admin_display_name
-        #   end
-        # end
+        alias_method :to_label, :admin_display_name
 
 
 
@@ -167,6 +161,7 @@ module CohesiveAdmin::Concerns::Resource
           end
 
         end # end class << self
+
 
       end
 
