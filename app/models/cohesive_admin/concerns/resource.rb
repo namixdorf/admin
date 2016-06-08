@@ -82,7 +82,7 @@ module CohesiveAdmin::Concerns::Resource
                   reflection = {
                     type:           'association',
                     macro:          r.macro,
-                    foreign_key:    r.foreign_key,
+                    foreign_key:    r.association_foreign_key,
                     class:          r.klass,
                     nested:         self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym)
                   }

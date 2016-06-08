@@ -7,8 +7,10 @@ module CohesiveAdmin
     # ensure that the user is logged in as the very first filter
     prepend_before_action :load_user
 
-    rescue_from Exception, with: lambda { |exception| render_500 }
-    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { |exception| render_404 }
+    unless Rails.env.development?
+      rescue_from Exception, with: lambda { |exception| render_500 }
+      rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { |exception| render_404 }
+    end
 
     private
 
