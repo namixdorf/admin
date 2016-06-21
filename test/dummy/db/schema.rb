@@ -36,8 +36,9 @@ ActiveRecord::Schema.define(version: 20160603200419) do
 
   create_table "jobs", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "people_count", default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "locations", force: :cascade do |t|
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 20160603200419) do
   create_table "people", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
+    t.text     "bio"
     t.integer  "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

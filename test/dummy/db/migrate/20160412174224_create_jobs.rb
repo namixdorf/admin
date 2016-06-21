@@ -3,6 +3,8 @@ class CreateJobs < ActiveRecord::Migration
     create_table :jobs do |t|
       t.string    :name
 
+      t.integer   :people_count, default: 0
+
       t.timestamps null: false
     end
   end

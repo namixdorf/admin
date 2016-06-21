@@ -22,7 +22,7 @@ parent_klass ||= nil
 
     <% else %>
 
-      <%= f.input(k) %>
+      <%= f.input(k, as: v[:type]) %>
 
     <% end %>
   <% end %>

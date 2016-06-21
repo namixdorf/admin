@@ -4,6 +4,8 @@ class CreatePeople < ActiveRecord::Migration
       t.string :name
       t.string :email
 
+      t.text    :bio
+
       t.belongs_to :job
 
       t.timestamps null: false

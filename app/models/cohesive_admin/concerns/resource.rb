@@ -89,6 +89,8 @@ module CohesiveAdmin::Concerns::Resource
                   @admin_config[:fields][k.to_sym] = 'association'
                   # omit foreign key columns
                   @blacklisted_columns << r.foreign_key.to_sym
+                  # omit counter_cache columns
+                  @blacklisted_columns << (r.options[:counter_cache].blank? ? "#{r.name}_count" : r.options[:counter_cache].to_s).to_sym
                 end
 
                 self.columns.each do |c|
@@ -107,15 +109,13 @@ module CohesiveAdmin::Concerns::Resource
               @admin_fields = {}
               self.admin_config[:fields].each do |k, field|
 
-                if field.is_a?(String)
+                if field.nil? || field.is_a?(String)
                   # parse
                   if field == 'association'
                     r = self.reflections[k.to_s]
                     @admin_fields[k] = {
                       type:           'association',
-                      macro:          r.macro,
-                      foreign_key:    r.foreign_key, #r.association_foreign_key,
-                      class:          r.klass,
+                      reflection:     r,
                       nested:         self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym)
                     }
                   else
@@ -162,15 +162,15 @@ module CohesiveAdmin::Concerns::Resource
               self.admin_fields.each do |k, f|
 
                 if f[:type] == 'association'
-
+                  r = f[:reflection]
                   if f[:nested]
-                    a["#{k}_attributes".to_sym] = [:id] + f[:class].admin_strong_params
+                    a["#{k}_attributes".to_sym] = [:id] + r.klass.admin_strong_params
 
-                  elsif f[:macro] == :belongs_to
-                    @admin_strong_params << f[:foreign_key]
+                  elsif r.macro == :belongs_to
+                    @admin_strong_params << r.foreign_key
 
-                  elsif f[:macro] == :has_many
-                    @admin_strong_params << { f[:foreign_key].pluralize => [] }
+                  elsif r.macro == :has_many
+                    @admin_strong_params << { :"#{r.name.to_s.singularize}_ids" => [] }
                   end
 
                 else
