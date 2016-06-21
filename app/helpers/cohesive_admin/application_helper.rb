@@ -6,5 +6,9 @@ module CohesiveAdmin
       (parent.reflections.values.include?(child.reflections[association].inverse_of) rescue false)
     end
 
+    def kaminari_url_for(page)
+      
+    end
+
   end
 end

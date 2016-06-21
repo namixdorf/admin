@@ -1,4 +1,4 @@
-name: User
+name: Admin User
 display_name_method: name
 fields:
   name: text

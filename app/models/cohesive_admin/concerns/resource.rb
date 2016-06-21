@@ -25,6 +25,7 @@ module CohesiveAdmin::Concerns::Resource
       @admin_config         = nil
       @admin_strong_params  = nil
       @display_name_method  = nil
+      @admin_fields         = nil
 
       CohesiveAdmin.manage(self)
 
@@ -48,11 +49,18 @@ module CohesiveAdmin::Concerns::Resource
           def admin_find(id)
             send admin_config[:finder], id
           end
+
+          def parse_yaml(file)
+            config = YAML.load_file(file).symbolize_keys
+          end
+
           # CohesiveAdmin configuration for a model can be placed in Rails.root/config/cohesive_admin/model_singular.yml
           def admin_config
 
             unless @admin_config
 
+
+              # defaults updated with args from model (ie. cohesive_admin({ finder: :find_by_slug }))
               @admin_config = {
                 name: self.name,
                 finder: :find,
@@ -71,31 +79,22 @@ module CohesiveAdmin::Concerns::Resource
                 # construct default config
 
                 # reflections - ie. belongs_to, has_many
-                reflection_columns = []
                 self.reflections.each do |k, r|
                   next if r.polymorphic? # have to skip polymorphic associations
-                  reflection = {
-                    type:           'association',
-                    macro:          r.macro,
-                    foreign_key:    r.foreign_key, #r.association_foreign_key,
-                    class:          r.klass,
-                    nested:         self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym)
-                  }
 
                   # omit has_one relationships by default, unless they are accepts_nested_attributes_for AND flagged as an admin_resource
-                  next if reflection[:macro] == :has_one && (!reflection[:nested] || !reflection[:class].admin_resource?)
+                  next if r.macro == :has_one && (!self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym) || !r.klass.admin_resource?)
 
-                  @admin_config[:fields][k.to_sym] = reflection
-                  reflection_columns << r.foreign_key.to_sym
+
+                  @admin_config[:fields][k.to_sym] = 'association'
+                  # omit foreign key columns
+                  @blacklisted_columns << r.foreign_key.to_sym
                 end
-
-
-                blacklisted = @blacklisted_columns + reflection_columns
 
                 self.columns.each do |c|
                   @admin_config[:fields][c.name.to_sym] = {
                     type: c.type
-                  } unless blacklisted.include?(c.name.to_sym)
+                  } unless @blacklisted_columns.include?(c.name.to_sym)
                 end if self.table_exists?
 
               end
@@ -104,7 +103,30 @@ module CohesiveAdmin::Concerns::Resource
           end
 
           def admin_fields
-            self.admin_config[:fields]
+            unless @admin_fields
+              @admin_fields = {}
+              self.admin_config[:fields].each do |k, field|
+
+                if field.is_a?(String)
+                  # parse
+                  if field == 'association'
+                    r = self.reflections[k.to_s]
+                    @admin_fields[k] = {
+                      type:           'association',
+                      macro:          r.macro,
+                      foreign_key:    r.foreign_key, #r.association_foreign_key,
+                      class:          r.klass,
+                      nested:         self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym)
+                    }
+                  else
+                    @admin_fields[k] = { type: field }
+                  end
+                else
+                  @admin_fields[k] = field
+                end
+              end
+            end
+            @admin_fields
           end
 
           def display_name_method

@@ -25,7 +25,7 @@ module CohesiveAdmin
     def as_json(options={})
       super(except: [:password_digest])
     end
-
+    
     def reset_password!
       new_pass = self.class.random_password
       self.update_attributes(password: new_pass, password_confirmation: new_pass)

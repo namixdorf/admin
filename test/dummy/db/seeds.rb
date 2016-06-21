@@ -3,11 +3,11 @@ u = CohesiveAdmin::User.new({ name: "Admin User", email: "info@cohesive.cc", pas
 u.save(validate: false)
 
 # Sample people
-@first = ["Tom", "John", "Jane", "Sally"]
-@last = ["Johnson", "Smith", "Brown", "Miller"]
+@first  = ["Tom", "John", "Robert", "Matthew", "Tim", "Kevin", "Mark", "David", "William", "Charles", "Jane", "Sally", "Mary", "Patricia", "Linda", "Elizabeth", "Karen", "Helen", "Laura", "Jessica"]
+@last   = ["Johnson", "Smith", "Williams", "Brown", "Miller", "White", "Hansen", "Jones", "Davis", "Taylor", "Moore", "Anderson", "Allen", "Young", "King", "Lee", "Norris", "Martin", "Thomas", "Garcia"]
 
 @people = []
-10.times do |i|
+30.times do |i|
   names = [@first.sample, @last.sample]
 
   @people << { name: names.join(" "), email: "#{names.join(".").downcase}@example.com" }
@@ -29,11 +29,13 @@ Job.create([
 Location.create([
   {
       slug: 'cohesive',
-      address_attributes: {
-        street: '100 Eddystone Drive',
-        city: 'Hudson',
-        state: 'IA',
-        zip: '50613'
-      }
+      addresses_attributes: [
+        {
+          street: '100 Eddystone Drive',
+          city: 'Hudson',
+          state: 'IA',
+          zip: '50613'
+        }
+      ]
   }
 ])

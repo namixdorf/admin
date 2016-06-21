@@ -5,7 +5,7 @@ class Location < ActiveRecord::Base
   # has_one :address, inverse_of: :location
   has_many :addresses, inverse_of: :location
 
-  # accepts_nested_attributes_for :addresses
+  accepts_nested_attributes_for :addresses
 
   validates :slug, presence: true, uniqueness: true, format: { with: /\A[a-z0-9]*\Z/i, message: "must only include letters and numbers" }
 

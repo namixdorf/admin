@@ -9,10 +9,17 @@ CohesiveAdmin::Engine.routes.draw do
         get :logout
       end
     end
-    resources :users, controller: :base, defaults: { class_name: "CohesiveAdmin::User" }
+    # resources :users, controller: :base, defaults: { class_name: "CohesiveAdmin::User" }, constraints: { class_name: "CohesiveAdmin::User" }
 
+    # kaminari routing ( ie. /page/4 )
+    # concern :paginatable do
+    #   get '(page/:page)', :action => :index, :on => :collection, :as => ''
+    # end
+
+    CohesiveAdmin::Engine.eager_load!
     Rails.application.eager_load!
+
     CohesiveAdmin.config.managed_models.each do |m|
-      resources ActiveModel::Naming.plural(m), controller: :base, defaults: { class_name: m.name }
+      resources ActiveModel::Naming.route_key(m), controller: :base, defaults: { class_name: m.name }#, constraints: { class_name: Regexp.new("^#{m.name}$") }#, concerns: :paginatable
     end
 end
