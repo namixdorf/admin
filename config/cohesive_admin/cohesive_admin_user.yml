@@ -1,7 +1,7 @@
 name: Admin User
 display_name_method: name
 fields:
-  name: text
+  name: string
   email: email
   password: password
   password_confirmation: password

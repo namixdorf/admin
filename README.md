@@ -14,6 +14,10 @@ CohesiveAdmin uses the [Materialize](http://materializecss.com/) CSS framework.
   * Make use of the :inverse_of option in your ActiveRecord relationships. This prevents nested fields on an object from displaying in the form. http://guides.rubyonrails.org/association_basics.html#bi-directional-associations
   * For nested attributes functionality, be sure that both the parent model and the nested attributes model are managed resources (`cohesive_admin`)
 
+## WYSIWYG Editor and File Uploads
+We use the [Froala WYSIWYG Editor](https://www.froala.com/wysiwyg-editor) for rich text fields. Froala has built-in support for direct asset uploads to [Amazon S3](https://aws.amazon.com/s3/). This makes for a convenient way to allow users to upload images and files to one central location without having to model them in your application. These assets should be stored independent of any other assets - either in a specific subdirectory in S3 (see the `key_start` param), or in a completely separate bucket. **NOTE:** Because enabling S3 uploads via Froala requires specific CORS configuration on the bucket, carefully consider whether or not using a shared bucket is appropriate for your situation.
+
+
 ## Installation
 Add it to your Gemfile:
 

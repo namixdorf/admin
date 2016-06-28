@@ -30,6 +30,12 @@ fields:
   * :refile
   * :color
 
+## WYSIWYG - Images & Files
+* S3 uploads are working
+* Need to create a proxy controller for browsing S3 files (and updating/deleting them)
+* Create similar functionality for Files (a FileManager plugin)
+* Keep this generalized so that if needed we could swap out the S3 backend?
+
 ## Generators
 * Generate the YAML for a model (go through the admin_fields step and then write to a file)
 * Generate directories for extensibility

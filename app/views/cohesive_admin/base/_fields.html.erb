@@ -15,14 +15,20 @@ parent_klass ||= nil
         <% end %>
 
       <% elsif !inverse_relationship_exists?(klass, k, parent_klass) %>
-
-        <%= f.association(k) %>
-
+        <div class="row">
+          <div class="col s12">
+            <%= f.association(k) %>
+          </div>
+        </div>
       <% end %>
 
     <% else %>
 
-      <%= f.input(k, as: v[:type]) %>
+      <div class="row">
+        <div class="col s12">
+          <%= f.input(k, as: v[:type]) %>
+        </div>
+      </div>
 
     <% end %>
   <% end %>

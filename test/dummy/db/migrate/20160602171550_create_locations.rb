@@ -4,6 +4,8 @@ class CreateLocations < ActiveRecord::Migration
 
       t.string    :slug,      limit: 20
 
+      t.text      :json_data
+
       t.timestamps null: false
     end
     add_index :locations, :slug

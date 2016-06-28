@@ -10,28 +10,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>Cohesive Admin // Content Management System</title>
-
-    <%= stylesheet_link_tag    '//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css', "cohesive_admin/application", '//fonts.googleapis.com/icon?family=Material+Icons', media: "all" %>
-    <%= javascript_include_tag "cohesive_admin/application", '//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js' %>
+    <%= stylesheet_link_tag    "cohesive_admin/application", '//fonts.googleapis.com/icon?family=Material+Icons', 'https://fonts.googleapis.com/css?family=Open+Sans:400,300,700', media: "all" %>
+    <%= javascript_include_tag "cohesive_admin/application" %>
     <%= csrf_meta_tags %>
+
+    <%= aws_init %>
   </head>
   <body>
 
-    <nav>
-      <div class="nav-wrapper row light-blue lighten-1">
-        <div class="col s12">
-          <%= link_to('Cohesive Admin', root_path, class: 'brand-logo') %>
+    <header>
+      <nav class="top-nav white">
+        <div class="nav-wrapper">
+          <ul class="left">
+            <!-- <li>
+              <form>
+                <div class="input-field">
+                  <input id="search" type="search" required>
+                  <label for="search"><i class="material-icons">search</i></label>
+                  <i class="material-icons">close</i>
+                </div>
+              </form>
+            </li> -->
+            <li>
+              <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+            </li>
+          </ul>
           <ul class="right hide-on-med-and-down">
-            <li><a href="#!"><i class="material-icons">search</i></a></li>
-            <li><a href="#!"><i class="material-icons">more_vert</i></a></li>
-            <li><%= link_to(current_user.name, [:edit, current_user], class: 'white-text') %></li>
-            <li><%= link_to(raw(content_tag(:i, 'power_settings_new', class: 'material-icons')), [:logout, :sessions], class: 'white-text', title: 'Logout') %></li>
+            <li>
+                <%= link_to([:edit, current_user]) do %>
+                  <i class="material-icons left">account_circle</i>
+                  <%= current_user.name %>
+                <% end %>
+            </li>
+            <li>
+              <%= link_to([:logout, :sessions], title: 'Logout', class: 'tooltipped', data: { position: 'bottom', delay: 50, tooltip: 'Logout'}) do %>
+                <i class="material-icons">power_settings_new</i>
+              <% end %>
+            </li>
           </ul>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
 
-    <ul class="side-nav fixed white">
+    <ul id="slide-out" class="side-nav fixed grey darken-3">
+      <li class="grey darken-3 z-depth-1">
+        <%= link_to(root_path, class: 'logo-link') do %>
+          <i class="material-icons left">donut_small</i> Cohesive Admin
+        <% end %>
+      </li>
       <% CohesiveAdmin.config.managed_models.each do |m| %>
         <%= content_tag(:li, class: ('active' if @klass && @klass.admin_display_name == m.admin_display_name)) do %>
           <%= link_to(m.admin_display_name.pluralize, [m], class: "collection-item") %>
@@ -39,19 +65,27 @@
       <% end %>
     </ul>
 
-    <div class="main">
-      <div class="row grey lighten-3">
-        <div class="col s12">
-          <h5><%= @header %></h5>
-        </div>
-      </div>
+    <main>
 
-      <div class="row">
-        <div class="col s12">
-          <%= yield %>
+      <section class="hero-panel blue darken-2 lighten-1 bg-image-escheresque">
+        <div class="row">
+          <div class="col s12 m10">
+            <%= content_tag(:h4, @header, class: 'white-text') %>
+          </div>
+          <div class="col s12 m2 right-align">
+            <%= yield(:hero_panel) %>
+          </div>
+      </section>
+
+      <section class="content">
+        <div class="row">
+          <div class="col s12">
+            <%= yield %>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+    </main>
 
 
   </body>

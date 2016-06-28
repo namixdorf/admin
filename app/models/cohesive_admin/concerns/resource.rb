@@ -119,6 +119,7 @@ module CohesiveAdmin::Concerns::Resource
                       nested:         self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym)
                     }
                   else
+                    field = :string if field.blank? # default to standard <input type="text" />
                     @admin_fields[k] = { type: field }
                   end
                 else

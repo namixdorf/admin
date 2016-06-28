@@ -1,12 +1,35 @@
-
-
-<%= content_tag(:div, "No #{@header} Found.") if @items.empty? %>
-<%= link_to(raw("#{content_tag(:i, 'add', class: 'material-icons left')}New #{@header.singularize}"), [:new, @klass.model_name.param_key], class: 'waves-effect waves-light btn') %>
-
-<div class="collection">
-  <% @items.each do |i| %>
-    <%= link_to(i.admin_display_name, [:edit, i], class: 'collection-item light-blue-text') %>
+<% content_for(:hero_panel) do %>
+  <%= link_to([:new, @klass.model_name.param_key], class: 'waves-effect waves-light btn-floating blue') do %>
+    <i class="material-icons">add</i>
   <% end %>
+<% end %>
+
+<div class="card-panel">
+  <table class="bordered highlight">
+    <thead>
+      <tr>
+        <th><%= @klass.display_name_method.to_s.humanize.titleize %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <% if @items.empty? %>
+      <tr>
+        <td class="center-align">
+          <%= "No #{@header} Found." %>
+        </td>
+      </tr>
+    <% else %>
+      <% @items.each do |i| %>
+        <tr>
+          <td>
+            <%= link_to(i.admin_display_name, [:edit, i]) %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
 </div>
+
 
 <%= paginate(@items, views_prefix: 'cohesive_admin', theme: 'materialize') %>

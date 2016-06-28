@@ -1,8 +1,63 @@
-.side-nav {
-  top: 64px;
-  overflow: hidden;
+
+body {
+  background-color: color("grey", "lighten-4");
 }
 
-.main {
+header, main {
   padding-left: 240px;
+}
+
+
+header {
+  position: relative;
+
+  nav ul a {
+    color: color("grey", "darken-3");
+  }
+}
+
+.nav-wrapper, .nav-wrapper form, .nav-wrapper form .input-field { height: 100%; }
+
+main {
+  .hero-panel {
+    padding: 5em 1em 1em;
+    h4 { margin: 0; }
+  }
+  .content {
+    padding: 2em;
+  }
+}
+
+.pagination {
+  li {
+    &.active { background-color: $secondary-color; }
+  }
+}
+
+.side-nav {
+  a, &.fixed a {
+    color: #FFF;
+    // font-weight: 200;
+    font-size: 0.9em;
+    &.logo-link {
+      i.material-icons { line-height: 64px; }
+    }
+  }
+}
+
+
+footer {
+  color: color("grey", "lighten-1");
+  font-size: 0.8rem;
+}
+
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+  main {
+    .content { padding: 2em 0; }
+  }
+
 }

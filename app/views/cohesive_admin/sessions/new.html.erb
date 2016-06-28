@@ -1,9 +1,11 @@
-<%= simple_form_for(@object, url: sessions_path, html: { id: 'object-form' }) do |f| %>
+<div class="card-panel">
+	<%= simple_form_for(@object, url: sessions_path, html: { id: 'object-form' }) do |f| %>
 
-	<%= f.input :email %>
-	<%= f.input :password %>
+		<%= f.input :email %>
+		<%= f.input :password %>
 
-	<button type="submit" class="waves-effect waves-light btn">Let's Go!</button>
+		<button type="submit" class="waves-effect waves-light btn">Let's Go!</button>
 
-<% end %>
+	<% end %>
+</div>
 <%= link_to('Forgot your password?', [:forgot_password, :sessions]) %>
