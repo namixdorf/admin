@@ -32,10 +32,11 @@ module CohesiveAdmin
 
   def self.after_configure
     # conveniences for AWS keys
-
-    self.config.aws[:key_start]         ||= 'cohesive_admin/'
-    self.config.aws[:secret_access_key] ||= (self.config.aws[:credentials].credentials.secret_access_key rescue nil)
-    self.config.aws[:access_key_id]     ||= (self.config.aws[:credentials].credentials.access_key_id rescue nil)
+    unless self.config.aws.blank?
+      self.config.aws[:key_start]         ||= 'cohesive_admin/'
+      self.config.aws[:secret_access_key] ||= (self.config.aws[:credentials].credentials.secret_access_key rescue nil)
+      self.config.aws[:access_key_id]     ||= (self.config.aws[:credentials].credentials.access_key_id rescue nil)
+    end
   end
 
 end

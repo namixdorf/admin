@@ -20,13 +20,14 @@ $ ->
 
 
 # asynchronously load Froala and S3 settings for security purposes
-$(document).on( 'froala.init', (e, config) ->
-  console.log(config)
-  $('textarea.wysiwyg').froalaEditor({
+$(document).on( 'froala.init', (e, s3config) ->
+  config = {
     zIndex: 999,
     heightMin: 300,
-    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', '|', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', 'insertHR', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'undo', 'redo', 'clearFormatting', 'selectAll', 'html'],
-    imageUploadToS3: {
+    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', '|', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', 'insertHR', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'undo', 'redo', 'clearFormatting', 'selectAll', 'html']
+  }
+  if s3config
+    config.imageUploadToS3 = {
       bucket:   config.bucket,
       region:   config.region,
       keyStart: config.key_start + 'images/',
@@ -41,5 +42,6 @@ $(document).on( 'froala.init', (e, config) ->
         signature: config.signature,
       }
     }
-  })
+
+  $('textarea.wysiwyg').froalaEditor(config)
 )

@@ -7,7 +7,8 @@ module CohesiveAdmin
     end
 
     def aws_init
-      if CohesiveAdmin.config.aws
+      data = false
+      unless CohesiveAdmin.config.aws.blank?
         # Froala requires that we provide the region-specific endpoint as the 'region' parameter. We'll use the aws-sdk gem to provide this.
         bucket = Aws::S3::Bucket.new(CohesiveAdmin.config.aws[:bucket], { region: CohesiveAdmin.config.aws[:region] })
         region = bucket.client.config.endpoint.host.gsub(/\.amazonaws\.com\Z/, '')
@@ -21,13 +22,14 @@ module CohesiveAdmin
             policy:         CohesiveAdmin::AmazonSignature.policy,
             signature:      CohesiveAdmin::AmazonSignature.signature,
         }
-        javascript_tag do
-          raw %Q{
-            $(function() {
-              $(document).trigger('froala.init', [#{data.to_json}]);
-            })
-          }
-        end
+      end
+
+      javascript_tag do
+        raw %Q{
+          $(function() {
+            $(document).trigger('froala.init', [#{data.to_json}]);
+          })
+        }
       end
     end
 
