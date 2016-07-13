@@ -38,10 +38,12 @@ main {
   a, &.fixed a {
     color: #FFF;
     // font-weight: 200;
-    font-size: 0.9em;
-    &.logo-link {
-      i.material-icons { line-height: 64px; }
-    }
+    font-size: 0.8em;
+  }
+  li.logo-link {
+    text-transform: uppercase;
+    a { font-size: 0.9em; }
+    &, a, i.material-icons { height: $navbar-height; line-height: $navbar-height; }
   }
 }
 

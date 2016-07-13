@@ -1,3 +1,4 @@
 fields:
   slug:
+  image: refile
   json_data: code

@@ -176,6 +176,10 @@ module CohesiveAdmin::Concerns::Resource
 
                 else
                   @admin_strong_params << k
+
+                  if f[:type] == 'refile'
+                    @admin_strong_params << "remove_#{k}"
+                  end
                 end
               end
 

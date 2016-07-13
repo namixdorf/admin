@@ -12,3 +12,10 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
+
+
+group :development do
+  gem "refile", '>= 0.6', require: "refile/rails"
+  gem "refile-mini_magick"
+  # gem "refile-s3"
+end
