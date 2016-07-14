@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20160603200419) do
 
   create_table "jobs", force: :cascade do |t|
     t.string   "name"
+    t.integer  "position",     default: 0
     t.integer  "people_count", default: 0
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false

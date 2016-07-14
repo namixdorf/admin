@@ -1,0 +1,14 @@
+<% content_for(:hero_panel) do %>
+  <%= link_to(@klass, class: 'waves-effect waves-light btn-floating green') do %>
+    <i class="material-icons">list</i>
+  <% end %>
+<% end %>
+
+<ul class="collection" data-sortable data-url="<%= url_for([:apply_sort, @klass]) %>">
+  <% @items.each do |i| %>
+    <%= content_tag(:li, class: 'collection-item', id: "item_#{i.id}") do %>
+      <%= i.admin_display_name %>
+      <i class="secondary-content material-icons">reorder</i>
+    <% end %>
+  <% end %>
+</ul>

@@ -10,7 +10,8 @@ module CohesiveAdmin
 
 
     def index
-      @items = @klass.page(params[:page])
+      @skope = @klass.admin_sortable? ? @klass.admin_sorted : @klass.all
+      @items = @skope.page(params[:page])
 
       respond_to do |format|
         format.html { render file: 'cohesive_admin/base/index' }
@@ -69,18 +70,19 @@ module CohesiveAdmin
       end
     end
 
-    # def sort
-    #   @items = @klass.sorted.all
-    #   render file: 'cohesive_admin/base/sort'
-    # end
-    #
-    # def apply_sort
-    #   params["item"].each_with_index { |x, i|
-    #     m = @klass.admin_find(x)
-    #     m.update_attribute(:position, i)
-    #   }
-    #   render text: ''
-    # end
+    def sort
+      render_404 and return unless @klass.admin_sortable?
+      @items = @klass.admin_sorted.all
+      render file: 'cohesive_admin/base/sort'
+    end
+
+    def apply_sort
+      params[:item].each_with_index do |x, i|
+        m = @klass.find(x)
+        m.update_attribute(:position, i)
+      end
+      render text: ''
+    end
 
     def destroy
       # if it's not a 'permanent' object, destroy it

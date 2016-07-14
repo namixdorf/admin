@@ -2,6 +2,9 @@
   <%= link_to([:new, @klass.model_name.param_key], class: 'waves-effect waves-light btn-floating blue') do %>
     <i class="material-icons">add</i>
   <% end %>
+  <%= link_to([:sort, @klass], class: 'waves-effect waves-light btn-floating red') do %>
+    <i class="material-icons">swap_vert</i>
+  <% end  if @klass.admin_sortable? %>
 <% end %>
 
 <div class="card-panel">

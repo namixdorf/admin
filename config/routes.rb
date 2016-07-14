@@ -20,6 +20,13 @@ CohesiveAdmin::Engine.routes.draw do
     Rails.application.eager_load!
 
     CohesiveAdmin.config.managed_models.each do |m|
-      resources ActiveModel::Naming.route_key(m), controller: :base, defaults: { class_name: m.name }#, constraints: { class_name: Regexp.new("^#{m.name}$") }#, concerns: :paginatable
+      resources ActiveModel::Naming.route_key(m), controller: :base, defaults: { class_name: m.name } do #, constraints: { class_name: Regexp.new("^#{m.name}$") }#, concerns: :paginatable
+        collection do
+          if m.admin_sortable?
+            get :sort
+            put :apply_sort
+          end
+        end
+      end
     end
 end

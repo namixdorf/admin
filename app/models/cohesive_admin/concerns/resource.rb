@@ -59,12 +59,12 @@ module CohesiveAdmin::Concerns::Resource
 
             unless @admin_config
 
-
               # defaults updated with args from model (ie. cohesive_admin({ finder: :find_by_slug }))
               @admin_config = {
                 name: self.name,
                 finder: :find,
-                fields: {}
+                fields: {},
+                sort: false
               }.merge(@admin_args.symbolize_keys)
 
               # attempt to parse config file
@@ -100,6 +100,7 @@ module CohesiveAdmin::Concerns::Resource
                 end if self.table_exists?
 
               end
+
             end
             @admin_config
           end
@@ -192,8 +193,8 @@ module CohesiveAdmin::Concerns::Resource
 
 
       end
-
-
+      
+      admin_sortable(admin_config[:sort]) if admin_config[:sort]
     end
 
 
