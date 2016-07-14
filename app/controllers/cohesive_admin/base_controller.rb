@@ -79,7 +79,7 @@ module CohesiveAdmin
     def apply_sort
       params[:item].each_with_index do |x, i|
         m = @klass.find(x)
-        m.update_attribute(:position, i)
+        m.update_attribute(@klass.admin_sort_column, i)
       end
       render text: ''
     end
