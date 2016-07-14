@@ -24,9 +24,14 @@ parent_klass ||= nil
 
     <% else %>
 
+      <%
+      input_html = {}
+      input_html[:class] = 'materialize-textarea' if v[:type] == :text
+      %>
+
       <div class="row">
         <div class="col s12">
-          <%= f.input(k, as: v[:type]) %>
+          <%= f.input(k, as: v[:type], input_html: input_html) %>
         </div>
       </div>
 

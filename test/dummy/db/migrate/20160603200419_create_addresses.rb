@@ -6,6 +6,7 @@ class CreateAddresses < ActiveRecord::Migration
       t.string    :city
       t.string    :state
       t.string    :zip
+      t.text      :description
 
       t.belongs_to :location
 

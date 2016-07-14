@@ -6,5 +6,5 @@ class Address < ActiveRecord::Base
   validates :city,    presence: true
   validates :state,   presence: true
 
-  belongs_to :location, inverse_of: :addresses
+  belongs_to :location
 end

@@ -5,6 +5,8 @@
 
 ```yaml
 name: Article
+sort:
+  column: position
 fields:
   title:
     type: text
@@ -14,7 +16,11 @@ fields:
   category:
     type: collection
     collection: Article::VALID_CATEGORIES
-
+filters:
+  featured:
+    scope: featured
+  by_issue:
+    association: issue
 ```  
 
 
@@ -26,12 +32,24 @@ fields:
 
 * Eliminate the need for :finder argument by forcing 'id' column as to_param?
 * Add default inputs for SimpleForm (take cues from Webflow?):
-  * :code (Ace code editor? - specify code type?)
-  * :refile
-  * :color
+  * :color?
+* Add 'type' to code editor (html, json, ruby)
+
+
+
+## UI
+* Flash messages
+* Add help text to YAML config
+
+## Collections
+* Simple 'options' list (ie. User#user_type)
+* Specifying the collection for an association
+
+## Polymorphic associations
+* How to handle selection & assignment
+* Possibly related to Collections solution above?
 
 ## WYSIWYG - Images & Files
-* S3 uploads are working
 * Need to create a proxy controller for browsing S3 files (and updating/deleting them)
 * Create similar functionality for Files (a FileManager plugin)
 * Keep this generalized so that if needed we could swap out the S3 backend?

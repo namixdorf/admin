@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20160603200419) do
     t.string   "city"
     t.string   "state"
     t.string   "zip"
+    t.text     "description"
     t.integer  "location_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

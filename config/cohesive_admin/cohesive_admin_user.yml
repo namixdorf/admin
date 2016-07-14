@@ -5,5 +5,3 @@ fields:
   email: email
   password: password
   password_confirmation: password
-  user_type:
-    collection: CohesiveAdmin::User::VALID_TYPES
