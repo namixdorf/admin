@@ -3,3 +3,4 @@ fields:
   email: email
   bio: wysiwyg
   job: association
+  active: boolean

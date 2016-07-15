@@ -26,4 +26,12 @@
       font-size: $label-font-size;
     }
   }
+
+  &.wysiwyg, &.code, &.refile > .file-field {
+    padding-top: 1em;
+    > label {
+      font-size: 0.8rem;
+      transform: translateY(-140%);
+    }
+  }
 }

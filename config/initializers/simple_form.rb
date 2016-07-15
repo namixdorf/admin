@@ -70,7 +70,7 @@ SimpleForm.setup do |config|
     # use the component :full_error, like:
     #
     # b.use :full_error, wrap_with: { tag: :span, class: :error }
-    end
+  end
 
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :default

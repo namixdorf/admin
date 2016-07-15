@@ -57,9 +57,10 @@ ActiveRecord::Schema.define(version: 20160603200419) do
     t.string   "name"
     t.string   "email"
     t.text     "bio"
+    t.boolean  "active",     default: true
     t.integer  "job_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
 end

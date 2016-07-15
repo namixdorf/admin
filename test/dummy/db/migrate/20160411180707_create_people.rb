@@ -6,6 +6,8 @@ class CreatePeople < ActiveRecord::Migration
 
       t.text    :bio
 
+      t.boolean :active, default: true
+
       t.belongs_to :job
 
       t.timestamps null: false
