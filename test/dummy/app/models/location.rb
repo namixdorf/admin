@@ -15,4 +15,8 @@ class Location < ActiveRecord::Base
     slug
   end
 
+  def to_label
+    %Q{#{id} - #{slug}}
+  end
+
 end

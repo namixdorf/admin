@@ -12,8 +12,7 @@ module CohesiveAdmin::Concerns::Resource
   def admin_display_name
     self.send(self.class.display_name_method)
   end
-  alias_method :to_label, :admin_display_name
-
+  alias_method :to_label, :admin_display_name #unless self.attribute_method?(:to_label)
 
   module ClassMethods
 
@@ -41,9 +40,11 @@ module CohesiveAdmin::Concerns::Resource
 
     def display_name_method
       unless @display_name_method
-        # admin_config['display_name_method'], self.name, or first admin_fields attribute, finally ID
+        # admin_config['display_name_method'], self.name|self.to_label, or first admin_fields attribute, finally ID
         if (dn = self.admin_config[:display_name_method]) && (self.attribute_method?(dn) || self.method_defined?(dn))
           @display_name_method = dn
+        elsif self.attribute_method?(:to_label) || self.method_defined?(:to_label)
+          @display_name_method = :to_label
         elsif self.attribute_method?(:name) || self.method_defined?(:name)
           @display_name_method = :name
         else
@@ -199,6 +200,8 @@ module CohesiveAdmin::Concerns::Resource
       CohesiveAdmin.manage(self)
 
       class_eval do
+
+        # alias_method :to_label, :admin_display_name unless self.attribute_method?(:to_label)
 
         class << self
 
