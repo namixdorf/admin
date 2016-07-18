@@ -7,7 +7,7 @@
 <ul class="collection" data-sortable data-url="<%= url_for([:apply_sort, @klass]) %>">
   <% @items.each do |i| %>
     <%= content_tag(:li, class: 'collection-item', id: "item_#{i.id}") do %>
-      <%= i.admin_display_name %>
+      <%= i.to_label %>
       <i class="secondary-content material-icons">reorder</i>
     <% end %>
   <% end %>
