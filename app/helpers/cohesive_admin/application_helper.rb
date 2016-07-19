@@ -27,7 +27,7 @@ module CohesiveAdmin
       javascript_tag do
         raw %Q{
           $(function() {
-            $(document).trigger('froala.init', [#{CohesiveAdmin.config.froala[:key]}, #{data.to_json}]);
+            $(document).trigger('froala.init', [#{CohesiveAdmin.config.froala[:key].to_json}, #{data.to_json}]);
           })
         }
       end
