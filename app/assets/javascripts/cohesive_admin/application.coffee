@@ -4,7 +4,6 @@
 #= require materialize-sprockets
 #= require_tree ./includes
 
-$.FroalaEditor.DEFAULTS.key = 'Ua2Pe2HTPYh1RNc2E1KDc1==';
 $ ->
   # kick things off
   $('select').material_select();
@@ -37,7 +36,9 @@ $ ->
 
 
 # asynchronously load Froala and S3 settings for security purposes
-$(document).on( 'froala.init', (e, s3config) ->
+$(document).on( 'froala.init', (e, key, s3config) ->
+  $.FroalaEditor.DEFAULTS.key = key
+  
   config = {
     zIndex: 999,
     heightMin: 300,
