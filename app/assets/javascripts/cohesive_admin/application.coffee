@@ -38,7 +38,7 @@ $ ->
 # asynchronously load Froala and S3 settings for security purposes
 $(document).on( 'froala.init', (e, key, s3config) ->
   $.FroalaEditor.DEFAULTS.key = key
-  
+
   config = {
     zIndex: 999,
     heightMin: 300,
@@ -46,18 +46,18 @@ $(document).on( 'froala.init', (e, key, s3config) ->
   }
   if s3config
     config.imageUploadToS3 = {
-      bucket:   config.bucket,
-      region:   config.region,
-      keyStart: config.key_start + 'images/',
+      bucket:   s3config.bucket,
+      region:   s3config.region,
+      keyStart: s3config.key_start + 'images/',
       callback: (url, key) ->
         # // The URL and Key returned from Amazon.
         console.log (url);
         console.log (key);
       params: {
-        acl: config.acl,
-        AWSAccessKeyId: config.access_key_id,
-        policy: config.policy,
-        signature: config.signature,
+        acl: s3config.acl,
+        AWSAccessKeyId: s3config.access_key_id,
+        policy: s3config.policy,
+        signature: s3config.signature,
       }
     }
 
