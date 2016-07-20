@@ -11,21 +11,12 @@ module CohesiveAdmin
     validates :password,      presence: true
     validates :password,      format: { with: /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z])/, message: 'must be at least 8 characters long, and must contain at least one upper-case, one lower-case, and one number or special character' }, allow_blank: true, unless: Proc.new { Rails.env.development? }
 
-    VALID_TYPES = ['Administrator']
-
     validates :name, presence: true
-    validates :user_type, presence: true, inclusion: { in: VALID_TYPES }
-
-    VALID_TYPES.each do |t|
-      define_method(%Q{#{t.strip.gsub(/\s/, '-').underscore}?}) do
-        self.user_type == t
-      end
-    end
 
     def as_json(options={})
       super(except: [:password_digest])
     end
-    
+
     def reset_password!
       new_pass = self.class.random_password
       self.update_attributes(password: new_pass, password_confirmation: new_pass)

@@ -4,7 +4,6 @@ class CreateCohesiveAdminUsers < ActiveRecord::Migration
       t.string :name,             limit: 40
       t.string :email,            limit: 80
       t.string :password_digest
-      t.string :user_type
       t.timestamps null: false
     end
     add_index :cohesive_admin_users, :email

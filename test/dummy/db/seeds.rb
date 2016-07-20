@@ -1,5 +1,5 @@
 # CMS user
-u = CohesiveAdmin::User.new({ name: "Admin User", email: "info@cohesive.cc", password: 'password', password_confirmation: 'password', user_type: "Administrator" })
+u = CohesiveAdmin::User.new({ name: "Admin User", email: "info@cohesive.cc", password: 'password', password_confirmation: 'password' })
 u.save(validate: false)
 
 # Sample people

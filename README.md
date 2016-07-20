@@ -36,5 +36,5 @@ In development, password validation is disabled for both user creation, as well 
 To create a new user via the IRB console:
 
 ```ruby
-u = CohesiveAdmin::User.create({ email: 'bob@example.com', password: 'doesNOTmatter', name: 'Admin User', user_type: 'Administrator' })
+u = CohesiveAdmin::User.create({ email: 'bob@example.com', password: 'doesNOTmatter', name: 'Admin User' })
 ```
