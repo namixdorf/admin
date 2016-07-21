@@ -22,18 +22,5 @@ module CohesiveAdmin
        CohesiveAdmin.app_root = app.root
     end
 
-    # initializer 'cohesive_admin.setup_models' do
-    #
-    #   ActiveSupport.on_load(:active_record) do
-    #     # Rails.application.eager_load!
-    #     # puts "ABCDEFG: #{CohesiveAdmin.config.managed_models.length}"
-    #     # CohesiveAdmin.config.managed_models.each do |m|
-    #     #   puts "#{m.name}"
-    #     #   m.admin_setup
-    #     # end
-    #   end
-    #
-    # end
-
   end
 end

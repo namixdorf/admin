@@ -22,6 +22,8 @@ parent_klass ||= nil
         </div>
       <% end %>
 
+    <% elsif v[:type] == 'polymorphic' %>
+      <%= f.input(k, as: v[:type]) %>
     <% else %>
 
       <%

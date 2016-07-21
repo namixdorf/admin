@@ -8,7 +8,7 @@ class CreateAddresses < ActiveRecord::Migration
       t.string    :zip
       t.text      :description
 
-      t.belongs_to :location
+      t.belongs_to :locatable, polymorphic: true
 
       t.timestamps null: false
     end

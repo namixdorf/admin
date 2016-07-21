@@ -1,7 +1,4 @@
 
-* Rework parsing of YAML configs for models
-  * Allow simply specifying input type (string), or nested options
-  * Need to build associations dynamically from YAML file, ie:
 
 ```yaml
 name: Article
@@ -35,7 +32,11 @@ filters:
   * :color?
 * Add 'type' to code editor (html, json, ruby)
 
+* Filters
+* Polymorphic association
 
+* "Permanent" object concept - don't allow deletion?
+  * Simply have the object respond to a permanent? method
 
 ## UI
 * Flash messages

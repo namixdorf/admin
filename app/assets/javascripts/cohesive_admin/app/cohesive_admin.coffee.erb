@@ -1,0 +1,8 @@
+<%
+models = {}
+CohesiveAdmin.config.managed_models.each {|m| models[m.name] = m.admin_attributes }
+%>
+
+
+class window.CohesiveAdmin
+  @managed_models = <%= models.to_json %>

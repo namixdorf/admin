@@ -11,11 +11,12 @@ module CohesiveAdmin
 
     def index
       @skope = @klass.admin_sortable? ? @klass.admin_sorted : @klass.all
-      @items = @skope.page(params[:page])
+      @skope = @skope.page(params[:page]) unless params[:page] == 'all'
+      @items = @skope.all
 
       respond_to do |format|
         format.html { render file: 'cohesive_admin/base/index' }
-        format.json { respond_with @items }
+        format.json { render json: @items.to_json(methods: [:to_label]) }
       end
     end
 
@@ -35,13 +36,13 @@ module CohesiveAdmin
             flash_success("#{klass_header} successfully created!")
             redirect_to @klass
           }
-          format.json { respond_with @object, location: nil }
+          format.json { render json: @object.to_json(methods: [:to_label]) }
         end
       else
         flash_error("There was a problem creating the #{klass_header}.")
         respond_to do |format|
           format.html { render file: 'cohesive_admin/base/form' }
-          format.json { respond_with @object }
+          format.json { render json: @object.to_json(methods: [:to_label]) }
         end
       end
     end
@@ -59,13 +60,13 @@ module CohesiveAdmin
             flash_success("#{klass_header} successfully updated!")
             redirect_to @klass
           }
-          format.json { respond_with @object }
+          format.json { render json: @object.to_json(methods: [:to_label]) }
         end
       else
         flash_error("There was a problem updating the #{klass_header}.")
         respond_to do |format|
           format.html { render file: 'cohesive_admin/base/form' }
-          format.json { respond_with @object }
+          format.json { render json: @object.to_json(methods: [:to_label]) }
         end
       end
     end
@@ -92,7 +93,7 @@ module CohesiveAdmin
             flash_success("The #{klass_header} successfully deleted!")
             redirect_to @klass
           }
-          format.json { respond_with @object }
+          format.json { render json: @object.to_json(methods: [:to_label]) }
         end
       else
         respond_to do |format|
@@ -100,7 +101,7 @@ module CohesiveAdmin
             flash_error("Unable to delete the #{klass_header}")
             redirect_to @klass
           }
-          format.json { respond_with @object }
+          format.json { render json: @object.to_json(methods: [:to_label]) }
         end
       end
 
@@ -113,6 +114,7 @@ module CohesiveAdmin
       def set_klass
         # overwrite in your controller
         @klass = params[:class_name].constantize rescue nil
+        Rails.logger.info "-------#{params[:class_name]} --- #{@klass}"
       end
 
       def set_header

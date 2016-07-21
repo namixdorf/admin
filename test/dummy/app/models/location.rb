@@ -3,7 +3,7 @@ class Location < ActiveRecord::Base
   cohesive_admin({ finder: :find_by_slug })
 
   # has_one :address, inverse_of: :location
-  has_many :addresses
+  has_many :addresses, as: :locatable
 
   attachment :image, type: :image
 

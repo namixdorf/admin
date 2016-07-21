@@ -9,11 +9,8 @@ module CohesiveAdmin::Concerns::Resource
     self.class.admin_resource?
   end
 
-  # def admin_display_name
-  #   self.send(self.class.display_name_method)
-  # end
-
   module ClassMethods
+    include CohesiveAdmin::Engine.routes.url_helpers
 
     def admin_resource?
       false
@@ -37,6 +34,20 @@ module CohesiveAdmin::Concerns::Resource
 
 
 
+    def default_url_options
+      ActionMailer::Base.default_url_options
+    end
+
+    def admin_attributes
+      {
+        class_name: self.name,
+        display_name: self.admin_display_name,
+        route_key: ActiveModel::Naming.route_key(self),
+        uri: polymorphic_path(self, host: 'http://example.com')
+      }
+    end
+
+
     def display_name_method
       unless @display_name_method
         # admin_config['display_name_method'], self.name|self.to_label, or first admin_fields attribute, finally ID
@@ -47,7 +58,7 @@ module CohesiveAdmin::Concerns::Resource
         else
           # iterate admin_fields until we find the first suitable attribute - NOT IDEAL!!
           self.admin_fields.each do |k,f|
-            next if f[:type] == 'association'
+            next if %w{association polymorphic}.include?(f[:type])
             break if (self.attribute_method?(k) || self.method_defined?(k)) && @display_name_method = k
           end
         end
@@ -92,15 +103,15 @@ module CohesiveAdmin::Concerns::Resource
 
           # reflections - ie. belongs_to, has_many
           self.reflections.each do |k, r|
-            next if r.polymorphic? # have to skip polymorphic associations
 
             # omit has_one relationships by default, unless they are accepts_nested_attributes_for AND flagged as an admin_resource
-            next if r.macro == :has_one && (!self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym) || !r.klass.admin_resource?)
+            next if r.has_one? && (!self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym) || !r.klass.admin_resource?)
 
 
-            @admin_config[:fields][k.to_sym] = 'association'
+            @admin_config[:fields][k.to_sym] = r.polymorphic? ? 'polymorphic' : 'association'
             # omit foreign key columns
             @blacklisted_columns << r.foreign_key.to_sym
+            @blacklisted_columns << r.foreign_type.to_sym if r.polymorphic?
             # omit counter_cache columns
             @blacklisted_columns << (r.options[:counter_cache].blank? ? "#{r.name}_count" : r.options[:counter_cache].to_s).to_sym
           end
@@ -128,10 +139,10 @@ module CohesiveAdmin::Concerns::Resource
 
           if field.nil? || field.is_a?(String)
             # parse
-            if field == 'association'
+            if %w{association polymorphic}.include?(field)
               r = self.reflections[k.to_s]
               @admin_fields[k] = {
-                type:           'association',
+                type:           field,
                 reflection:     r,
                 nested:         self.nested_attributes_options.symbolize_keys.has_key?(k.to_sym)
               }
@@ -157,18 +168,17 @@ module CohesiveAdmin::Concerns::Resource
 
         self.admin_fields.each do |k, f|
 
-          if f[:type] == 'association'
+          if %w{association polymorphic}.include?(f[:type])
             r = f[:reflection]
             if f[:nested]
               a["#{k}_attributes".to_sym] = [:id] + r.klass.admin_strong_params
 
             elsif r.macro == :belongs_to
               @admin_strong_params << r.foreign_key
-
+              @admin_strong_params << r.foreign_type.to_sym if r.polymorphic?
             elsif r.macro == :has_many
               @admin_strong_params << { :"#{r.name.to_s.singularize}_ids" => [] }
             end
-
           else
             @admin_strong_params << k
 
