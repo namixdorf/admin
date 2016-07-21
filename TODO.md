@@ -33,13 +33,17 @@ filters:
 * Add 'type' to code editor (html, json, ruby)
 
 * Filters
+  * Specify in YAML:
+    filter_by:
+      job_type:
 * Polymorphic association
 
 * "Permanent" object concept - don't allow deletion?
   * Simply have the object respond to a permanent? method
 
+* 'Preview' button ?
+
 ## UI
-* Flash messages
 * Add help text to YAML config
 
 ## Collections
