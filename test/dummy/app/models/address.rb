@@ -7,4 +7,5 @@ class Address < ActiveRecord::Base
   validates :state,   presence: true
 
   belongs_to :locatable, polymorphic: true
+  validates :locatable_type, inclusion: { in: ['Person', 'Location'] }
 end
