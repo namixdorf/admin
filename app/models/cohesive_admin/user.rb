@@ -17,10 +17,10 @@ module CohesiveAdmin
       super(except: [:password_digest])
     end
 
-    def reset_password!
+    def reset_password!(login_url=nil)
       new_pass = self.class.random_password
       self.update_attributes(password: new_pass, password_confirmation: new_pass)
-      LoginNotifier.password_reset(self, new_pass).deliver
+      LoginNotifier.password_reset(self, new_pass, login_url).deliver
     end
 
     class << self

@@ -36,7 +36,7 @@ module CohesiveAdmin
     def reset_password
       @form_param = @klass.model_name.param_key
       if @object = @klass.where(email: params[@form_param][:email]).first
-        @object.reset_password!
+        @object.reset_password!(new_session_url)
         flash_success("Your password has been reset and sent to your email address!")
         redirect_to(new_session_path)
       else
@@ -55,7 +55,7 @@ module CohesiveAdmin
     def klass_params
       params.require(@klass.model_name.param_key).permit(:email, :password)
     end
-    
+
     def redirect_if_logged_in
       redirect_to(root_path) unless session[:user_id].blank?
     end

@@ -4,8 +4,9 @@ module CohesiveAdmin
 
     layout 'cohesive_admin/mailer'
 
-    def password_reset(user, password)
-      @password = password
+    def password_reset(user, password, login_url)
+      @password   = password
+      @login_url  = login_url
       mail(to: user.email, subject: "Cohesive Admin // Password Reset")
     end
   end
