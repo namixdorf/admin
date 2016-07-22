@@ -22,5 +22,9 @@ module CohesiveAdmin
        CohesiveAdmin.app_root = app.root
     end
 
+    initializer "cohesive_admin.precompile_images" do |app|
+       app.config.assets.precompile += ['cohesive_admin/preloader.gif']
+    end
+
   end
 end

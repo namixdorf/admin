@@ -114,7 +114,6 @@ module CohesiveAdmin
       def set_klass
         # overwrite in your controller
         @klass = params[:class_name].constantize rescue nil
-        Rails.logger.info "-------#{params[:class_name]} --- #{@klass}"
       end
 
       def set_header

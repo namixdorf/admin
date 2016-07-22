@@ -9,7 +9,13 @@ CohesiveAdmin::Engine.routes.draw do
         get :logout
       end
     end
-    
+
+    resources :s3_assets do
+      collection do
+        delete :delete
+      end
+    end
+
     CohesiveAdmin::Engine.eager_load!
     Rails.application.eager_load!
 

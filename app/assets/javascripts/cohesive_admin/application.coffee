@@ -26,3 +26,5 @@ $ ->
         url: list.attr('data-url')
       })
     })
+
+  CohesiveAdmin.initialize()

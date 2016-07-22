@@ -68,3 +68,7 @@ filters:
 * Custom views
 * Customizing views through configs
 * SimpleForm fields
+
+## Documentation
+* Polymorphic belongs_to: validating "inclusion: :in" for the 'type' column filters the list of classes to pick from.
+* Configuring AWS will enable blanket uploads to S3 bucket from WYSIWYG editor
