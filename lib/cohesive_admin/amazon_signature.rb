@@ -2,6 +2,14 @@ module CohesiveAdmin
   module AmazonSignature
     extend self
 
+    def expiration
+      if @expiry.blank? || Time.now >= @expiry
+        @expiry = 10.hours.from_now
+      else
+        @expiry
+      end
+    end
+
     def signature
       Base64.encode64(
           OpenSSL::HMAC.digest(
@@ -17,7 +25,7 @@ module CohesiveAdmin
 
     def policy_data
       {
-        expiration: 10.hours.from_now.utc.iso8601,
+        expiration: self.expiration.utc.iso8601,
         conditions: [
           ["starts-with", "$key", CohesiveAdmin.config.aws[:key_start]],
           ["starts-with", "$x-requested-with", "xhr"],

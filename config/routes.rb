@@ -10,11 +10,12 @@ CohesiveAdmin::Engine.routes.draw do
       end
     end
 
-    resources :s3_assets do
+    resources :s3_assets, only: [:index, :delete] do
       collection do
         delete :delete
       end
     end
+
 
     CohesiveAdmin::Engine.eager_load!
     Rails.application.eager_load!

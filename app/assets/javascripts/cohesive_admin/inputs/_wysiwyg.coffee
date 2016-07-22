@@ -1,56 +1,58 @@
 # asynchronously load Froala and S3 settings for security purposes
-$(document).on( 'froala.init', (e, key, s3config) ->
+$(document).on( 'cohesive_admin.initialized', (e) ->
+  
+  config = CohesiveAdmin.config
 
-  $.FroalaEditor.DEFAULTS.key = CohesiveAdmin.froala.key
+  $.FroalaEditor.DEFAULTS.key = config.froala.key
 
-  config = {
+  froala_config = {
     zIndex: 999,
     heightMin: 300,
     toolbarButtons: ['bold', 'italic', 'underline', 'insertLink', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '|', 'insertImage', 'insertVideo', 'insertFile', '|', 'color', 'quote', 'insertHR', 'insertTable', '|', 'undo', 'redo', '|', 'html', '|', 'fullscreen', '|']
   }
-  if CohesiveAdmin.aws
+  if config.aws
 
-    config.imageUploadToS3 = {
-      bucket:   CohesiveAdmin.aws.bucket,
-      region:   CohesiveAdmin.aws.region,
-      keyStart: CohesiveAdmin.aws.key_start + 'images/',
+    froala_config.imageUploadToS3 = {
+      bucket:   config.aws.bucket,
+      region:   config.aws.region,
+      keyStart: config.aws.key_start + 'images/',
       callback: (url, key) ->
         # // The URL and Key returned from Amazon.
         console.log (url);
         console.log (key);
       params: {
-        acl: CohesiveAdmin.aws.acl,
-        AWSAccessKeyId: CohesiveAdmin.aws.access_key_id,
-        policy: CohesiveAdmin.aws.policy,
-        signature: CohesiveAdmin.aws.signature,
+        acl: config.aws.acl,
+        AWSAccessKeyId: config.aws.access_key_id,
+        policy: config.aws.policy,
+        signature: config.aws.signature,
       }
     }
 
-    config.fileUploadToS3 = {
-      bucket:   CohesiveAdmin.aws.bucket,
-      region:   CohesiveAdmin.aws.region,
-      keyStart: CohesiveAdmin.aws.key_start + 'files/',
+    froala_config.fileUploadToS3 = {
+      bucket:   config.aws.bucket,
+      region:   config.aws.region,
+      keyStart: config.aws.key_start + 'files/',
       callback: (url, key) ->
         # // The URL and Key returned from Amazon.
         console.log (url);
         console.log (key);
       params: {
-        acl: CohesiveAdmin.aws.acl,
-        AWSAccessKeyId: CohesiveAdmin.aws.access_key_id,
-        policy: CohesiveAdmin.aws.policy,
-        signature: CohesiveAdmin.aws.signature,
+        acl: config.aws.acl,
+        AWSAccessKeyId: config.aws.access_key_id,
+        policy: config.aws.policy,
+        signature: config.aws.signature,
       }
     }
 
-    config.imageManagerLoadURL      = CohesiveAdmin.aws.assets.index
-    config.imageManagerDeleteURL    = CohesiveAdmin.aws.assets.delete
-    config.imageManagerDeleteMethod = 'DELETE'
-    config.imageManagerDeleteParams = {
-                                        authenticity_token: $('meta[name="csrf-token"]').attr('content'),
-                                        type: 'image'
-                                      }
-    config.imageManagerPreloader    = CohesiveAdmin.aws.assets.preloader
+    froala_config.imageManagerLoadURL      = config.aws.assets.index
+    froala_config.imageManagerDeleteURL    = config.aws.assets.delete
+    froala_config.imageManagerDeleteMethod = 'DELETE'
+    froala_config.imageManagerDeleteParams = {
+                                                authenticity_token: $('meta[name="csrf-token"]').attr('content'),
+                                                type: 'image'
+                                              }
+    froala_config.imageManagerPreloader    = config.aws.assets.preloader
 
 
-  $('textarea.wysiwyg').froalaEditor(config)
+  $('textarea.wysiwyg').froalaEditor(froala_config)
 )
