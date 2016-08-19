@@ -1,8 +1,5 @@
 
 ## P1
-* materialize-sass (0.97.7)
-  * breaks side nav
-  * makes Cohesive admin icon wrong color
 * Refile input - allow types other than images
 * Search
 * Filters
@@ -54,7 +51,6 @@ filters:
 
 ## UI
 * Add help text to YAML config
-* Default sort menu alphabetically
 * Default sort items list by created date?
 * Allow multiple columns in index view:
   * :to_label_columns (?) [:name, :category_name, :created_at]

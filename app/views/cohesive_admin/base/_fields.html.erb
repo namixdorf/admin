@@ -17,13 +17,13 @@ parent_klass ||= nil
       <% elsif !inverse_relationship_exists?(klass, k, parent_klass) %>
         <div class="row">
           <div class="col s12">
-            <%= f.association(k) %>
+            <%= f.association(k, include_blank: true) %>
           </div>
         </div>
       <% end %>
 
     <% elsif v[:type] == 'polymorphic' %>
-      <%= f.input(k, as: v[:type]) %>
+      <%= f.input(k, as: 'polymorphic') %>
     <% else %>
 
       <%

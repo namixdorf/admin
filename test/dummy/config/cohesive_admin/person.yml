@@ -1,6 +1,6 @@
 fields:
   name:
   email: email
-  bio: wysiwyg
   job: association
+  bio: wysiwyg
   active: boolean
