@@ -4,6 +4,7 @@ class Location < ActiveRecord::Base
 
   # has_one :address, inverse_of: :location
   has_many :addresses, as: :locatable
+  has_and_belongs_to_many :jobs
 
   attachment :image, type: :image
 

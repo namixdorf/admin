@@ -1,4 +1,15 @@
 
+## P1
+* materialize-sass (0.97.7)
+  * breaks side nav
+  * makes Cohesive admin icon wrong color
+* Refile input - allow types other than images
+* Search
+* Filters
+  * Specify in YAML:
+    filter_by:
+      job_type:
+* Simple 'options' list (ie. User#user_type)
 
 ```yaml
 name: Article
@@ -27,15 +38,10 @@ filters:
 #   end
 
 
-* Eliminate the need for :finder argument by forcing 'id' column as to_param?
 * Add default inputs for SimpleForm (take cues from Webflow?):
   * :color?
 * Add 'type' to code editor (html, json, ruby)
 
-* Filters
-  * Specify in YAML:
-    filter_by:
-      job_type:
 * Polymorphic association
 
 * "Permanent" object concept - don't allow deletion?
@@ -43,20 +49,22 @@ filters:
 
 * 'Preview' button ?
 
+## Collections
+* Specifying the collection for an association
+
 ## UI
 * Add help text to YAML config
-
-## Collections
-* Simple 'options' list (ie. User#user_type)
-* Specifying the collection for an association
+* Default sort menu alphabetically
+* Default sort items list by created date?
+* Allow multiple columns in index view:
+  * :to_label_columns (?) [:name, :category_name, :created_at]
 
 ## Polymorphic associations
 * How to handle selection & assignment
 * Possibly related to Collections solution above?
 
 ## WYSIWYG - Images & Files
-* Need to create a proxy controller for browsing S3 files (and updating/deleting them)
-* Create similar functionality for Files (a FileManager plugin)
+* Create similar proxy functionality for Files (a FileManager plugin)
 * Keep this generalized so that if needed we could swap out the S3 backend?
 
 ## Generators
@@ -72,3 +80,4 @@ filters:
 ## Documentation
 * Polymorphic belongs_to: validating "inclusion: :in" for the 'type' column filters the list of classes to pick from.
 * Configuring AWS will enable blanket uploads to S3 bucket from WYSIWYG editor
+* S3 setup & IAM configuration

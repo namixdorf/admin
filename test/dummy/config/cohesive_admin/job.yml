@@ -1,3 +1,4 @@
 fields:
   name:
+  locations: association
 sort: position

@@ -3,3 +3,4 @@ fields:
   image: refile
   json_data: code
   addresses: association
+  jobs: association

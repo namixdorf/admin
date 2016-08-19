@@ -176,7 +176,7 @@ module CohesiveAdmin::Concerns::Resource
             elsif r.macro == :belongs_to
               @admin_strong_params << r.foreign_key
               @admin_strong_params << r.foreign_type.to_sym if r.polymorphic?
-            elsif r.macro == :has_many
+            elsif r.macro == :has_many || r.macro == :has_and_belongs_to_many
               @admin_strong_params << { :"#{r.name.to_s.singularize}_ids" => [] }
             end
           else
