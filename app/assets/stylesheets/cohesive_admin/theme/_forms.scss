@@ -35,4 +35,10 @@
     }
   }
   .dropdown-content { z-index: 1000; }
+
+  &.collection {
+    margin: 1rem 0 0 0;
+    border: none;
+    overflow: visible;
+  }
 }

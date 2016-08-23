@@ -10,7 +10,7 @@ u.save(validate: false)
 30.times do |i|
   names = [@first.sample, @last.sample]
 
-  @people << { name: names.join(" "), email: "#{names.join(".").downcase}@example.com" }
+  @people << { prefix: Person::VALID_PREFIXES.sample, name: names.join(" "), email: "#{names.join(".").downcase}@example.com" }
 end
 
 Person.create(@people.uniq)

@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20160819190647) do
   add_index "locations", ["slug"], name: "index_locations_on_slug"
 
   create_table "people", force: :cascade do |t|
+    t.string   "prefix"
     t.string   "name"
     t.string   "email"
     t.text     "bio"

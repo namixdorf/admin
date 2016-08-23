@@ -1,4 +1,5 @@
 fields:
+  prefix: collection
   name:
   email: email
   job: association

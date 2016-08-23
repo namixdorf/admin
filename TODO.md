@@ -47,7 +47,7 @@ filters:
 * 'Preview' button ?
 
 ## Collections
-* Specifying the collection for an association
+* Specifying the collection for an association (possibly just use validates_inclusion_in??)
 
 ## UI
 * Add help text to YAML config

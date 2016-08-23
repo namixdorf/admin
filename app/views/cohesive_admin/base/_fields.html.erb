@@ -23,7 +23,9 @@ parent_klass ||= nil
       <% end %>
 
     <% elsif v[:type] == 'polymorphic' %>
+
       <%= f.input(k, as: 'polymorphic') %>
+      
     <% else %>
 
       <%
