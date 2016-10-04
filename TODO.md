@@ -77,3 +77,4 @@ filters:
 * Polymorphic belongs_to: validating "inclusion: :in" for the 'type' column filters the list of classes to pick from.
 * Configuring AWS will enable blanket uploads to S3 bucket from WYSIWYG editor
 * S3 setup & IAM configuration
+* collection input type && validates_inclusion_in

@@ -1,5 +1,5 @@
 <% content_for(:hero_panel) do %>
-  <%= link_to([:new, @klass.model_name.param_key], class: 'waves-effect waves-light btn-floating blue') do %>
+  <%= link_to([:new, ActiveModel::Naming.singular_route_key(@klass)], class: 'waves-effect waves-light btn-floating blue') do %>
     <i class="material-icons">add</i>
   <% end %>
   <%= link_to([:sort, @klass], class: 'waves-effect waves-light btn-floating red') do %>
