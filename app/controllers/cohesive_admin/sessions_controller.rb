@@ -5,7 +5,7 @@ module CohesiveAdmin
 
     skip_before_action :load_user
     before_action :redirect_if_logged_in, except: [:logout]
-    skip_around_action :authorize
+    # skip_around_action :authorizedd
 
     def new
       @object = @klass.new
