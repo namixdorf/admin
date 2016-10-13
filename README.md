@@ -28,7 +28,7 @@ gem 'cohesive_admin', git: 'git@github.com:cohesivecc/admin.git', tag: "<specifi
 Install the migrations:
 
 ```console
-rake cohesive_admin_engine:install:migrations
+rake cohesive_admin:install:migrations
 ```
 
 In development, password validation is disabled for both user creation, as well as authentication. This makes it easy to create test users in development and log in to the admin interface with any account.
